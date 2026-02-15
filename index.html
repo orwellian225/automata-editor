@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Turing Machine Editor</title>
+
+        <link rel="stylesheet" href="css/base.css" />
+        <link rel="stylesheet" href="css/tabs.css" />
+        <link rel="stylesheet" href="css/canvas.css" />
+    </head>
+
+    <body>
+        <main>
+            <nav>
+                <button class="tab-btn" id="tab-menu-btn">Menu</button>
+                <button class="tab-btn" id="tab-desc-btn">Description</button>
+                <button class="tab-btn" id="tab-tabl-btn">Table</button>
+                <button class="tab-btn tab-show" id="tab-diag-btn">
+                    Diagram
+                </button>
+                <button class="tab-btn" id="tab-exec-btn">Execution</button>
+            </nav>
+
+            <div id="tab-window">
+                <div class="tab-win" id="tab-menu-win">
+                    <h1>Menu</h1>
+                </div>
+                <div class="tab-win" id="tab-desc-win">
+                    <h1>Description</h1>
+                </div>
+                <div class="tab-win" id="tab-tabl-win"><h1>Table</h1></div>
+                <div class="tab-win tab-show" id="tab-diag-win">
+                    <canvas id="diagram_canvas"></canvas>
+                </div>
+                <div class="tab-win" id="tab-exec-win">
+                    <h1>Executions</h1>
+                </div>
+            </div>
+        </main>
+    </body>
+
+    <script src="js/tabs.js"></script>
+    <script src="js/machine.js"></script>
+    <script src="js/canvas_camera.js"></script>
+    <script src="js/canvas_control.js"></script>
+</html>
