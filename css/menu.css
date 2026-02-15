@@ -1,0 +1,9 @@
+div.menu {
+    display: flex;
+    justify-content: center;
+    align-items: top;
+
+    width: 66%;
+    min-width: 600px;
+    height: 100%;
+}

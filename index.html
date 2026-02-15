@@ -10,20 +10,26 @@
 
     <body>
         <main>
-            <nav>
-                <button class="tab-btn" id="tab-menu-btn">Menu</button>
-                <button class="tab-btn" id="tab-desc-btn">Description</button>
-                <button class="tab-btn" id="tab-tabl-btn">Table</button>
-                <button class="tab-btn tab-show" id="tab-diag-btn">
-                    Diagram
-                </button>
-                <button class="tab-btn" id="tab-exec-btn">Execution</button>
-            </nav>
+            <span class="top-bar">
+                <menu>
+                    <button class="menu-btn">Download</button>
+                    <button class="menu-btn">Upload</button>
+                    <button class="menu-btn">Reset</button>
+                </menu>
+
+                <nav>
+                    <button class="tab-btn" id="tab-desc-btn">
+                        Description
+                    </button>
+                    <button class="tab-btn" id="tab-tabl-btn">Table</button>
+                    <button class="tab-btn tab-show" id="tab-diag-btn">
+                        Diagram
+                    </button>
+                    <button class="tab-btn" id="tab-exec-btn">Execution</button>
+                </nav>
+            </span>
 
             <div id="tab-window">
-                <div class="tab-win" id="tab-menu-win">
-                    <h1>Menu</h1>
-                </div>
                 <div class="tab-win" id="tab-desc-win">
                     <h1>Description</h1>
                 </div>
@@ -38,8 +44,19 @@
         </main>
     </body>
 
+    <script src="js/tm-core/machine.js"></script>
+    <script src="js/tm-core/diagram.js"></script>
+    <script>
+        let machine = DecisionTuringMachine.default();
+        window.addEventListener("message", (event) => {
+            if (event.data?.type === "set-machine") {
+                // machine = event.data.machine;
+                console.log("process machine");
+            }
+        });
+    </script>
+
     <script src="js/tabs.js"></script>
-    <script src="js/machine.js"></script>
     <script src="js/canvas_camera.js"></script>
     <script src="js/canvas_control.js"></script>
 </html>

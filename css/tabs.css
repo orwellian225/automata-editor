@@ -22,6 +22,42 @@ div.tab-show {
     align-items: center;
 }
 
+button.tab-btn {
+    padding: 5px;
+
+    width: 120px;
+    margin-left: 10px;
+    margin-right: 10px;
+
+    background-color: #fff;
+    color: #000;
+    border: 4px solid #eee;
+
+    font-size: large;
+}
+
+@media (max-width: 900px) {
+    button.tab-btn {
+        font-size: small;
+    }
+}
+
+button.tab-btn:hover {
+    border-bottom: 4px solid #aaa;
+}
+
+button.tab-btn:active {
+    border-bottom: 4px solid #000;
+}
+
+button.tab-btn:focus {
+    outline: none;
+}
+
 button.tab-show {
-    text-decoration: underline;
+    border-bottom: 4px solid #000;
+}
+
+button.tab-show:hover {
+    border-bottom: 4px solid #000;
 }
