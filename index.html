@@ -33,7 +33,14 @@
                 <div class="tab-win" id="tab-desc-win">
                     <h1>Description</h1>
                 </div>
-                <div class="tab-win" id="tab-tabl-win"><h1>Table</h1></div>
+                <div class="tab-win" id="tab-tabl-win">
+                    <div class="table-editor">
+                        <span>
+                            <button>Add state</button>
+                            <button>Add symbol</button>
+                        </span>
+                    </div>
+                </div>
                 <div class="tab-win tab-show" id="tab-diag-win">
                     <canvas id="diagram_canvas"></canvas>
                 </div>
@@ -46,14 +53,17 @@
 
     <script src="js/tm-core/machine.js"></script>
     <script src="js/tm-core/diagram.js"></script>
+    <script src="js/tm-core/computation.js"></script>
     <script>
         let machine = DecisionTuringMachine.default();
-        window.addEventListener("message", (event) => {
-            if (event.data?.type === "set-machine") {
-                // machine = event.data.machine;
-                console.log("process machine");
-            }
-        });
+        let computations = [];
+
+        // window.addEventListener("message", (event) => {
+        //     if (event.data?.type === "set-machine") {
+        //         // machine = event.data.machine;
+        //         console.log("process machine");
+        //     }
+        // });
     </script>
 
     <script src="js/tabs.js"></script>
