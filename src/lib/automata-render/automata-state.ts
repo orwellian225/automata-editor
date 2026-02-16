@@ -346,7 +346,11 @@ function draw_qsqsd_transition_to_self(
         if (text_angle > Math.PI / 2 || text_angle < -Math.PI / 2) {
             ctx.rotate(Math.PI);
         }
-        ctx.fillText(`${read_symbol}, ${write_symbol}, ${direction}`, 0, 0);
+        ctx.fillText(
+            `${read_symbol}, ${write_symbol}, ${direction_to_str(direction)}`,
+            0,
+            0,
+        );
         ctx.restore();
     }
 }
