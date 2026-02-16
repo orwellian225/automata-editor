@@ -190,7 +190,7 @@ function draw_qsqsd_transition_to_other(
         }
 
         ctx.fillText(
-            `${read_symbol}, ${write_symbol}, ${direction_to_str(direction)}`,
+            `${read_symbol} → ${write_symbol}, ${direction_to_str(direction)}`,
             0,
             (idx + 1) * transition_rendering_params.text_offset,
         );
@@ -347,7 +347,7 @@ function draw_qsqsd_transition_to_self(
             ctx.rotate(Math.PI);
         }
         ctx.fillText(
-            `${read_symbol}, ${write_symbol}, ${direction_to_str(direction)}`,
+            `${read_symbol} → ${write_symbol}, ${direction_to_str(direction)}`,
             0,
             0,
         );

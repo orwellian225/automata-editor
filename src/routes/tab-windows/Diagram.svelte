@@ -110,6 +110,6 @@
     canvas {
         width: 100%;
         height: 100%;
-        outline: 2px solid #000;
+        outline: 2px solid #ccc;
     }
 </style>

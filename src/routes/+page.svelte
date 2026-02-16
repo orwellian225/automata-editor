@@ -66,7 +66,7 @@
     </div>
 
     <div
-        class="tab"
+        class="tab background"
         class:tab-show={!show_description &&
             !show_table &&
             !show_diagram &&
@@ -76,8 +76,11 @@
             show_diagram ||
             show_computation}
     >
-        There is no thing to see here. Enable one of the other tabs to the view
-        the current machine.
+        <p>There is nothing to see here.</p>
+
+        <p>
+            <em>Created by Brendan Griffiths 2026</em>
+        </p>
     </div>
 </main>
 
@@ -85,7 +88,7 @@
     :global(body) {
         margin: 0;
         padding: 0;
-        font-family: "Berkeley Mone", monospace;
+        font-family: "Berkeley Mono", monospace;
     }
 
     header {
@@ -122,6 +125,17 @@
 
     .tab.description {
         width: 100%;
+    }
+
+    .tab-show.background {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+
+        padding: 20px;
+
+        font-size: large;
     }
 
     button {
