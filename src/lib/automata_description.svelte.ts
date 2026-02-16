@@ -1,5 +1,11 @@
 import type { DecisionTuringMachine } from "./automata-core/decision-turing-machine";
 
+export const format_type = (type: string): string => {
+    if (type === "decision_tm") {
+        return "Decision Turing Machine";
+    }
+};
+
 export type MachineDescription = {
     type: "decision_tm";
     machine: DecisionTuringMachine;
@@ -36,6 +42,13 @@ export let machine_description = $state<MachineDescription>({
                 read_symbol: "_",
                 next_state: 0,
                 write_symbol: "_",
+                direction: 0,
+            },
+            {
+                curr_state: 0,
+                read_symbol: "_",
+                next_state: 1,
+                write_symbol: "1",
                 direction: 0,
             },
             {

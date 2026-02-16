@@ -1,7 +1,9 @@
 <script lang="ts">
+    import { machine_description } from "$lib/automata_description.svelte";
     import Diagram from "./tab-windows/Diagram.svelte";
+    import Description from "./tab-windows/Description.svelte";
 
-    let show_description = $state(false);
+    let show_description = $state(true);
     let show_table = $state(false);
     let show_diagram = $state(true);
     let show_computation = $state(false);
@@ -37,11 +39,11 @@
 
 <main>
     <div
-        class="tab"
+        class="tab description"
         class:tab-show={show_description}
         class:tab-hide={!show_description}
     >
-        <h1>Description</h1>
+        <Description />
     </div>
 
     <div class="tab" class:tab-show={show_table} class:tab-hide={!show_table}>
@@ -88,6 +90,7 @@
     header {
         width: 100vw;
         height: 7vh;
+        min-height: fit-content;
 
         display: flex;
         flex-direction: row;
@@ -102,6 +105,7 @@
 
         display: flex;
         flex-direction: row;
+        overflow: hidden;
     }
 
     .tab-show {
@@ -113,6 +117,10 @@
     .tab {
         width: 100%;
         margin: 4px;
+    }
+
+    .tab.description {
+        width: 100%;
     }
 
     button {
