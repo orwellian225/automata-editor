@@ -47,22 +47,22 @@ export const draw_decision_turing_machine = (
 
     const group_by_state_transitions: any = {};
     for (const transition of machine.transitions) {
-        if (group_by_state_transitions[transition.curr_state]) {
+        if (group_by_state_transitions[transition.curr_state_id]) {
             if (
-                group_by_state_transitions[transition.curr_state][
-                    transition.next_state
+                group_by_state_transitions[transition.curr_state_id][
+                    transition.next_state_id
                 ]
             ) {
-                group_by_state_transitions[transition.curr_state][
-                    transition.next_state
+                group_by_state_transitions[transition.curr_state_id][
+                    transition.next_state_id
                 ].push({
                     read_symbol: transition.read_symbol,
                     write_symbol: transition.write_symbol,
                     direction: transition.direction,
                 });
             } else {
-                group_by_state_transitions[transition.curr_state][
-                    transition.next_state
+                group_by_state_transitions[transition.curr_state_id][
+                    transition.next_state_id
                 ] = [
                     {
                         read_symbol: transition.read_symbol,
@@ -72,9 +72,9 @@ export const draw_decision_turing_machine = (
                 ];
             }
         } else {
-            group_by_state_transitions[transition.curr_state] = {};
-            group_by_state_transitions[transition.curr_state][
-                transition.next_state
+            group_by_state_transitions[transition.curr_state_id] = {};
+            group_by_state_transitions[transition.curr_state_id][
+                transition.next_state_id
             ] = [
                 {
                     read_symbol: transition.read_symbol,

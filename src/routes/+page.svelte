@@ -2,8 +2,9 @@
     import { machine_description } from "$lib/automata_description.svelte";
     import Diagram from "./tab-windows/Diagram.svelte";
     import Description from "./tab-windows/Description.svelte";
+    import Table from "./tab-windows/Table.svelte";
 
-    let show_description = $state(true);
+    let show_description = $state(false);
     let show_table = $state(false);
     let show_diagram = $state(true);
     let show_computation = $state(false);
@@ -47,7 +48,7 @@
     </div>
 
     <div class="tab" class:tab-show={show_table} class:tab-hide={!show_table}>
-        <h1>Table</h1>
+        <Table />
     </div>
     <div
         class="tab"

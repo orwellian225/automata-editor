@@ -12,9 +12,9 @@ export const direction_to_str = (direction: number) => {
 
 /// State x Symbol -> State x Symbol x Direction
 export type QSQSDTransition = {
-    curr_state: AutomataStateID;
+    curr_state_id: AutomataStateID;
     read_symbol: string;
-    next_state: AutomataStateID;
+    next_state_id: AutomataStateID;
     write_symbol: string;
     direction: number;
 };
