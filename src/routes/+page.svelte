@@ -1,4 +1,6 @@
 <script lang="ts">
+    import Diagram from "./tab-windows/Diagram.svelte";
+
     let show_description = $state(false);
     let show_table = $state(false);
     let show_diagram = $state(true);
@@ -50,7 +52,7 @@
         class:tab-show={show_diagram}
         class:tab-hide={!show_diagram}
     >
-        <h1>Diagram</h1>
+        <Diagram />
     </div>
     <div
         class="tab"
@@ -110,7 +112,6 @@
     }
     .tab {
         width: 100%;
-        outline: 2px solid blue;
         margin: 4px;
     }
 
