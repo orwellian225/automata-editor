@@ -9,10 +9,12 @@ export const format_type = (type: string): string => {
 export type MachineDescription = {
     type: "decision_tm";
     machine: DecisionTuringMachine;
+    test_cases: Array<string>;
 };
 
 export let machine_description = $state<MachineDescription>({
     type: "decision_tm",
+    test_cases: ["0", "00", "000", "0000"],
     machine: {
         states: [
             { id: 0, label: "0", diagram: { position: { x: -200, y: 0 } } },

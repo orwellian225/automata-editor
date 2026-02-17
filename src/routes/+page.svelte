@@ -1,13 +1,13 @@
 <script lang="ts">
-    import { machine_description } from "$lib/automata_description.svelte";
     import Diagram from "./tab-windows/Diagram.svelte";
     import Description from "./tab-windows/Description.svelte";
     import Table from "./tab-windows/Table.svelte";
+    import Computation from "./tab-windows/Computation.svelte";
 
     let show_description = $state(false);
     let show_table = $state(false);
     let show_diagram = $state(true);
-    let show_computation = $state(false);
+    let show_computation = $state(true);
 </script>
 
 <header>
@@ -62,7 +62,7 @@
         class:tab-show={show_computation}
         class:tab-hide={!show_computation}
     >
-        <h1>Computation</h1>
+        <Computation />
     </div>
 
     <div
