@@ -1,7 +1,8 @@
 <script lang="ts">
-    import { machine_description } from "$lib/automata_description.svelte";
+    import { get_machine_description } from "$lib/automata_description.svelte";
     import { direction_to_str } from "$lib/automata-core/automata-transition";
 
+    const machine_description = get_machine_description();
     const transitions = machine_description.machine.transitions;
 </script>
 

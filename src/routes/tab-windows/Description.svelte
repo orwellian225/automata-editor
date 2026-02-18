@@ -1,9 +1,10 @@
 <script lang="ts">
     import {
-        machine_description,
+        get_machine_description,
         format_type,
     } from "$lib/automata_description.svelte";
 
+    const machine_description = get_machine_description();
     const num_transitions = machine_description.machine.transitions.length;
     const num_expected_transitions =
         machine_description.machine.states.length *

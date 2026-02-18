@@ -2,8 +2,9 @@
     import type { Attachment } from "svelte/attachments";
     import Camera from "$lib/camera";
     import { draw_decision_turing_machine } from "$lib/automata-render/decision-turing-machine";
-    import { machine_description } from "$lib/automata_description.svelte";
+    import { get_machine_description } from "$lib/automata_description.svelte";
 
+    const machine_description = get_machine_description();
     const attach_diagram_canvas: Attachment = (element: Element) => {
         const canvas = element as HTMLCanvasElement;
         const ctx = canvas.getContext("2d");

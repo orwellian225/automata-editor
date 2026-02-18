@@ -1,7 +1,7 @@
 <script lang="ts">
-    import { machine_description } from "$lib/automata_description.svelte";
+    import { get_machine_description } from "$lib/automata_description.svelte";
 
-    let cases: Array<string> = machine_description.test_cases;
+    let cases: Array<string> = get_machine_description().test_cases;
     let current_tape_case = $state(0);
     let show_resource_usage = $state(false);
 </script>

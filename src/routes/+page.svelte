@@ -1,4 +1,14 @@
 <script lang="ts">
+    import { encode, decode } from "base64-compressor";
+    import { page } from "$app/state";
+    import { goto } from "$app/navigation";
+    import { onMount } from "svelte";
+
+    import {
+        get_machine_description,
+        set_machine_description,
+    } from "$lib/automata_description.svelte";
+
     import Diagram from "./tab-windows/Diagram.svelte";
     import Description from "./tab-windows/Description.svelte";
     import Table from "./tab-windows/Table.svelte";
@@ -7,7 +17,26 @@
     let show_description = $state(false);
     let show_table = $state(false);
     let show_diagram = $state(true);
-    let show_computation = $state(true);
+    let show_computation = $state(false);
+
+    onMount(async () => {
+        const raw_automata = page.url.searchParams.get("automata_desc");
+        if (raw_automata) {
+            set_machine_description(await decode(raw_automata));
+        }
+    });
+
+    $effect(() => {
+        encode(get_machine_description()).then((encoded_automata: string) => {
+            const url = new URL(page.url);
+            url.searchParams.set("automata_desc", encoded_automata);
+            goto(url.toString(), {
+                replaceState: true,
+                noScroll: true,
+                keepFocus: true,
+            });
+        });
+    });
 </script>
 
 <header>
