@@ -39,6 +39,8 @@
     });
 </script>
 
+<svelte:window on:wheel|nonpassive={(e: WheelEvent) => e.preventDefault()} />
+
 <header>
     <div class="menu">
         <button onclick={() => alert("TODO")}>Download</button>
@@ -129,6 +131,7 @@
     :global(body) {
         margin: 0;
         padding: 0;
+        overscroll-behavior: contain;
         font-family: "Berkeley Mono", monospace;
     }
 
