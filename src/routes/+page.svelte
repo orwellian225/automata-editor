@@ -108,7 +108,19 @@
         <p>There is nothing to see here.</p>
 
         <p>
-            <em>Created by Brendan Griffiths 2026</em>
+            <em
+                >Created by <a href="https://seagrass.co.za"
+                    >Brendan Griffiths</a
+                > 2026</em
+            >
+        </p>
+        <p>
+            <em
+                >Code available on <a
+                    href="https://github.com/orwellian225/automata-editor"
+                    >Github</a
+                ></em
+            >
         </p>
     </div>
 </main>
