@@ -6,6 +6,10 @@ compatibility_date = "2026-02-18"
 compatibility_flags = ["nodejs_als"]
 workers_dev = false
 
+[assets]
+binding = "ASSETS"
+directory = ".svelte-kit/cloudflare"
+
 [route]
 pattern = "automata.seagrass.co.za/*"
 zone_name = "automata.seagrass.co.za"
