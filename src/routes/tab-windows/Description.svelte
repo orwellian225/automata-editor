@@ -7,7 +7,8 @@
     const machine_description = get_machine_description();
     const num_transitions = machine_description.machine.transitions.length;
     const num_expected_transitions =
-        machine_description.machine.states.length *
+        (machine_description.machine.states.length -
+            (machine_description.type === "decision_tm" ? 2 : 1)) *
         (machine_description.machine.problem_alphabet.length +
             machine_description.machine.tape_alphabet.length);
     const is_deterministic = num_transitions === num_expected_transitions;
