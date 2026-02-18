@@ -139,6 +139,7 @@
 
         display: flex;
         flex-direction: row;
+        flex-wrap: wrap;
 
         align-items: center;
         justify-content: space-evenly;
@@ -207,5 +208,16 @@
 
     nav button.show-tab {
         border-bottom: 4px solid #000;
+    }
+
+    @media (max-width: 800px) {
+        .menu button,
+        nav button {
+            width: 80px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            font-size: small;
+        }
     }
 </style>
