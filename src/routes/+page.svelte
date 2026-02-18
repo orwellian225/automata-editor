@@ -41,8 +41,8 @@
 
 <header>
     <div class="menu">
-        <button>Download</button>
-        <button>Upload</button>
+        <button onclick={() => alert("TODO")}>Download</button>
+        <button onclick={() => alert("TODO")}>Upload</button>
     </div>
 
     <nav>
