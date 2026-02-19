@@ -30,7 +30,7 @@ export const dtm_properties = {
             ),
             "Reject State": dtm_properties.state_id_to_state(
                 machine,
-                machine.accept_state,
+                machine.reject_state,
             ),
         };
     },
