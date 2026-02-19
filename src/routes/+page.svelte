@@ -18,33 +18,48 @@
     let show_table = $state(false);
     let show_diagram = $state(true);
     let show_computation = $state(false);
-
-    onMount(async () => {
-        const raw_automata = page.url.searchParams.get("automata_desc");
-        if (raw_automata) {
-            set_machine_description(await decode(raw_automata));
-        }
-    });
-
-    $effect(() => {
-        encode(get_machine_description()).then((encoded_automata: string) => {
-            const url = new URL(page.url);
-            url.searchParams.set("automata_desc", encoded_automata);
-            goto(url.toString(), {
-                replaceState: true,
-                noScroll: true,
-                keepFocus: true,
-            });
-        });
-    });
 </script>
 
 <svelte:window on:wheel|nonpassive={(e: WheelEvent) => e.preventDefault()} />
 
 <header>
     <div class="menu">
-        <button onclick={() => alert("TODO")}>Download</button>
-        <button onclick={() => alert("TODO")}>Upload</button>
+        <button
+            onclick={() => {
+                const data = JSON.stringify(get_machine_description(), null, 2);
+                const blob = new Blob([data], { type: "application/json" });
+                const url = URL.createObjectURL(blob);
+
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = "automata.json";
+                a.click();
+
+                URL.revokeObjectURL(url);
+                a.remove();
+            }}>Download</button
+        >
+        <button
+            onclick={() => {
+                const input = document.createElement("input");
+                input.type = "file";
+                input.accept = ".json";
+
+                input.onchange = () => {
+                    const file = input.files?.[0];
+                    if (!file) return;
+
+                    const reader = new FileReader();
+                    reader.onload = () => {
+                        const parsed = JSON.parse(reader.result as string);
+                        set_machine_description(parsed);
+                    };
+                    reader.readAsText(file);
+                };
+
+                input.click();
+            }}>Upload</button
+        >
     </div>
 
     <nav>

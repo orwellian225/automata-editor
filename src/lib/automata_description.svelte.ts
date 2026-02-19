@@ -42,11 +42,13 @@ export const format_type = (type: string): string => {
 
 export type MachineDescription = {
     type: string;
+    name: string;
     machine: DecisionTuringMachine | ComputationalTuringMachine;
     test_cases: Array<string>;
 };
 
 const iterate_over: MachineDescription = {
+    name: "Iterate Over Entire String",
     type: ctm_type,
     test_cases: [],
     machine: {
@@ -83,7 +85,8 @@ const iterate_over: MachineDescription = {
         halt_state: 1,
     },
 };
-const is_even: MachineDescription = {
+const is_odd: MachineDescription = {
+    name: "Is Odd",
     type: dtm_type,
     test_cases: [],
     machine: {

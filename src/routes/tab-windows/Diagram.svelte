@@ -6,8 +6,10 @@
         automata_renderer,
     } from "$lib/automata_description.svelte";
 
-    const machine_description = get_machine_description();
-    const machine_renderer = automata_renderer(machine_description.type);
+    const machine_description = $derived(get_machine_description());
+    const machine_renderer = $derived(
+        automata_renderer(machine_description.type),
+    );
     const attach_diagram_canvas: Attachment = (element: Element) => {
         const canvas = element as HTMLCanvasElement;
         const ctx = canvas.getContext("2d");

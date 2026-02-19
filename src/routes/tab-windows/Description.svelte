@@ -6,21 +6,25 @@
         format_type,
     } from "$lib/automata_description.svelte";
 
-    const machine_description = get_machine_description();
-    const machine_props = automata_properties(machine_description.type);
+    const machine_description = $derived(get_machine_description());
+    const machine_props = $derived(
+        automata_properties(machine_description.type),
+    );
 
-    const num_transitions = machine_props.expected_transitions(
-        machine_description.machine,
+    const num_transitions = $derived(
+        machine_props.expected_transitions(machine_description.machine),
     );
-    const is_deterministic = machine_props.is_deterministic(
-        machine_description.machine,
+    const is_deterministic = $derived(
+        machine_props.is_deterministic(machine_description.machine),
     );
-    const initial_state = machine_props.state_id_to_state(
-        machine_description.machine,
-        machine_description.machine.initial_state,
+    const initial_state = $derived(
+        machine_props.state_id_to_state(
+            machine_description.machine,
+            machine_description.machine.initial_state,
+        ),
     );
-    const notable_states = machine_props.notable_states(
-        machine_description.machine,
+    const notable_states = $derived(
+        machine_props.notable_states(machine_description.machine),
     );
 </script>
 
