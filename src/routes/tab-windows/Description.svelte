@@ -3,7 +3,7 @@
     import {
         get_machine_description,
         automata_properties,
-        format_type,
+        automata_type_formatted,
     } from "$lib/automata_description.svelte";
 
     const machine_description = $derived(get_machine_description());
@@ -33,7 +33,7 @@
         <tbody>
             <tr>
                 <th>Type</th>
-                <td>{format_type(machine_description.type)}</td>
+                <td>{automata_type_formatted(machine_description.type)}</td>
             </tr>
             <tr>
                 <th>States</th>
