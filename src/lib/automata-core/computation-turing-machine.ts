@@ -1,48 +1,43 @@
 import type { AutomataState, AutomataStateID } from "./automata-state";
 import type { QSQSDTransition } from "./automata-transition";
 
-export type DecisionTuringMachine = {
+export type ComputationalTuringMachine = {
     states: Array<AutomataState>;
     problem_alphabet: Array<string>;
     tape_alphabet: Array<string>;
     transitions: Array<QSQSDTransition>;
     initial_state: AutomataStateID;
-    accept_state: AutomataStateID;
-    reject_state: AutomataStateID;
+    halt_state: AutomataStateID;
 };
 
-export const dtm_type = "decision_tm";
+export const ctm_type = "computational_tm";
 
-export const dtm_properties = {
+export const ctm_properties = {
     state_id_to_state: (
-        machine: DecisionTuringMachine,
+        machine: ComputationalTuringMachine,
         id: AutomataStateID,
     ) => {
         return machine.states.find((state) => state.id === id);
     },
     notable_states: (
-        machine: DecisionTuringMachine,
+        machine: ComputationalTuringMachine,
     ): { [key: string]: AutomataState | undefined } => {
         return {
-            "Accept State": dtm_properties.state_id_to_state(
+            "Halt State": ctm_properties.state_id_to_state(
                 machine,
-                machine.accept_state,
-            ),
-            "Reject State": dtm_properties.state_id_to_state(
-                machine,
-                machine.accept_state,
+                machine.halt_state,
             ),
         };
     },
-    expected_transitions: (machine: DecisionTuringMachine): number => {
+    expected_transitions: (machine: ComputationalTuringMachine): number => {
         return (
-            (machine.states.length - 2) *
+            (machine.states.length - 1) *
             (machine.tape_alphabet.length + machine.problem_alphabet.length)
         );
     },
-    is_deterministic: (machine: DecisionTuringMachine) => {
+    is_deterministic: (machine: ComputationalTuringMachine) => {
         if (
-            dtm_properties.expected_transitions(machine) !==
+            ctm_properties.expected_transitions(machine) !==
             machine.transitions.length
         ) {
             return false;
@@ -51,10 +46,7 @@ export const dtm_properties = {
         const alphabet = machine.tape_alphabet.concat(machine.problem_alphabet);
         let state_symbol_counts = {};
         for (const state of machine.states) {
-            if (
-                state.id === machine.accept_state ||
-                state.id === machine.reject_state
-            ) {
+            if (state.id === machine.halt_state) {
                 continue;
             }
 

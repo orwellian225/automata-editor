@@ -1,4 +1,4 @@
-import type { DecisionTuringMachine } from "$lib/automata-core/decision-turing-machine";
+import type { ComputationalTuringMachine } from "$lib/automata-core/computation-turing-machine";
 
 import {
     draw_qsqsd_transition,
@@ -6,9 +6,9 @@ import {
     type AutomataStateRenderModifier,
 } from "./automata-state";
 
-export const draw_decision_turing_machine = (
+export const draw_computational_turing_machine = (
     ctx: CanvasRenderingContext2D,
-    machine: DecisionTuringMachine,
+    machine: ComputationalTuringMachine,
 ) => {
     for (const state of machine.states) {
         const state_modifiers: Array<AutomataStateRenderModifier> = [];
@@ -21,18 +21,10 @@ export const draw_decision_turing_machine = (
             });
         }
 
-        if (state.id === machine.reject_state) {
+        if (state.id === machine.halt_state) {
             state_modifiers.push({
-                name: "reject",
-                style: "#ff0000",
-                inside: true,
-            });
-        }
-
-        if (state.id === machine.accept_state) {
-            state_modifiers.push({
-                name: "accept",
-                style: "#00ff00",
+                name: "halt",
+                style: "#000000",
                 inside: true,
             });
         }

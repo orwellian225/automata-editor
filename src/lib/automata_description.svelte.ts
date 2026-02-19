@@ -1,19 +1,90 @@
-import type { DecisionTuringMachine } from "./automata-core/decision-turing-machine";
+import {
+    type DecisionTuringMachine,
+    dtm_properties,
+    dtm_type,
+} from "./automata-core/decision-turing-machine";
+import { draw_decision_turing_machine } from "./automata-render/decision-turing-machine";
+
+import {
+    type ComputationalTuringMachine,
+    ctm_properties,
+    ctm_type,
+} from "./automata-core/computation-turing-machine";
+import { draw_computational_turing_machine } from "./automata-render/computation-turing-machine";
+
+export const automata_types = [dtm_type, ctm_type];
+
+export const automata_renderer = (type: string) => {
+    if (type === dtm_type) {
+        return draw_decision_turing_machine;
+    } else if (type === ctm_type) {
+        return draw_computational_turing_machine;
+    }
+
+    return () => {};
+};
+
+export const automata_properties = (type: string): any => {
+    if (type === dtm_type) {
+        return dtm_properties;
+    } else if (type === ctm_type) {
+        return ctm_properties;
+    }
+};
 
 export const format_type = (type: string): string => {
-    if (type === "decision_tm") {
+    if (type === dtm_type) {
         return "Decision Turing Machine";
+    } else if (type === ctm_type) {
+        return "Computational Turing Machine";
     }
 };
 
 export type MachineDescription = {
-    type: "decision_tm";
-    machine: DecisionTuringMachine;
+    type: string;
+    machine: DecisionTuringMachine | ComputationalTuringMachine;
     test_cases: Array<string>;
 };
 
+const iterate_over: MachineDescription = {
+    type: ctm_type,
+    test_cases: [],
+    machine: {
+        states: [
+            { id: 0, label: "q0", diagram: { position: { x: -100, y: 0 } } },
+            { id: 1, label: "qH", diagram: { position: { x: 100, y: 0 } } },
+        ],
+        problem_alphabet: ["0", "1"],
+        tape_alphabet: ["_"],
+        transitions: [
+            {
+                curr_state_id: 0,
+                read_symbol: "0",
+                next_state_id: 0,
+                write_symbol: "0",
+                direction: +1,
+            },
+            {
+                curr_state_id: 0,
+                read_symbol: "1",
+                next_state_id: 0,
+                write_symbol: "1",
+                direction: +1,
+            },
+            {
+                curr_state_id: 0,
+                read_symbol: "_",
+                next_state_id: 1,
+                write_symbol: "_",
+                direction: -1,
+            },
+        ],
+        initial_state: 0,
+        halt_state: 1,
+    },
+};
 const is_even: MachineDescription = {
-    type: "decision_tm",
+    type: dtm_type,
     test_cases: [],
     machine: {
         states: [
@@ -74,7 +145,7 @@ const is_even: MachineDescription = {
     },
 };
 
-let machine_description = $state<MachineDescription>(is_even);
+let machine_description = $state<MachineDescription>(iterate_over);
 export function set_machine_description(description: MachineDescription) {
     machine_description = description;
 }

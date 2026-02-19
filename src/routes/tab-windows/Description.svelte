@@ -1,38 +1,30 @@
 <script lang="ts">
+    import type { AutomataStateID } from "$lib/automata-core/automata-state";
     import {
         get_machine_description,
+        automata_properties,
         format_type,
     } from "$lib/automata_description.svelte";
 
     const machine_description = get_machine_description();
-    const num_transitions = machine_description.machine.transitions.length;
-    const num_expected_transitions =
-        (machine_description.machine.states.length -
-            (machine_description.type === "decision_tm" ? 2 : 1)) *
-        (machine_description.machine.problem_alphabet.length +
-            machine_description.machine.tape_alphabet.length);
-    const is_deterministic = num_transitions === num_expected_transitions;
-    const num_transition_display =
-        num_transitions === num_expected_transitions
-            ? `${num_transitions}`
-            : num_transitions > num_expected_transitions
-              ? `${num_transitions} > ${num_expected_transitions}`
-              : `${num_transitions} < ${num_expected_transitions}`;
+    const machine_props = automata_properties(machine_description.type);
 
-    const initial_state = machine_description.machine.states.find(
-        (state) => state.id === machine_description.machine.initial_state,
+    const num_transitions = machine_props.expected_transitions(
+        machine_description.machine,
     );
-    const accept_state = machine_description.machine.states.find(
-        (state) => state.id === machine_description.machine.accept_state,
+    const is_deterministic = machine_props.is_deterministic(
+        machine_description.machine,
     );
-    const reject_state = machine_description.machine.states.find(
-        (state) => state.id === machine_description.machine.reject_state,
+    const initial_state = machine_props.state_id_to_state(
+        machine_description.machine,
+        machine_description.machine.initial_state,
+    );
+    const notable_states = machine_props.notable_states(
+        machine_description.machine,
     );
 </script>
 
 <div>
-    <h1>Description</h1>
-
     <table>
         <tbody>
             <tr>
@@ -40,8 +32,12 @@
                 <td>{format_type(machine_description.type)}</td>
             </tr>
             <tr>
-                <th>Number of states</th>
-                <td>{machine_description.machine.states.length}</td>
+                <th>States</th>
+                <td
+                    >{machine_description.machine.states
+                        .map((state) => state.label)
+                        .join(", ")}</td
+                >
             </tr>
             <tr>
                 <th>Problem alphabet</th>
@@ -61,20 +57,21 @@
                 >
             </tr>
             <tr>
-                <th>Number of transitions</th>
-                <td>{num_transition_display}</td>
-            </tr>
-            <tr>
                 <th>Initial State</th>
-                <td>{initial_state ? initial_state.label : "N/A"}</td>
+                <td>{initial_state ? initial_state.label : "N/A"} </td>
+            </tr>
+            {#each Object.entries(notable_states) as [label, state]}
+                <tr>
+                    <th>{label}</th>
+                    <td>{state ? state.label : "N/A"}</td>
+                </tr>
+            {/each}
+            <tr>
+                <th></th>
             </tr>
             <tr>
-                <th>Accept State</th>
-                <td>{accept_state ? accept_state.label : "N/A"}</td>
-            </tr>
-            <tr>
-                <th>Reject State</th>
-                <td>{reject_state ? reject_state.label : "N/A"}</td>
+                <th>Number of transitions</th>
+                <td>{num_transitions}</td>
             </tr>
             <tr>
                 <th>Deterministic</th>
@@ -106,6 +103,7 @@
 
         border: 1px solid #ccc;
         border-collapse: collapse;
+        margin: 5px 0px;
     }
 
     table td,

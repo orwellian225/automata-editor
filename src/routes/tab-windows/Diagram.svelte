@@ -1,10 +1,13 @@
 <script lang="ts">
     import type { Attachment } from "svelte/attachments";
     import Camera from "$lib/camera";
-    import { draw_decision_turing_machine } from "$lib/automata-render/decision-turing-machine";
-    import { get_machine_description } from "$lib/automata_description.svelte";
+    import {
+        get_machine_description,
+        automata_renderer,
+    } from "$lib/automata_description.svelte";
 
     const machine_description = get_machine_description();
+    const machine_renderer = automata_renderer(machine_description.type);
     const attach_diagram_canvas: Attachment = (element: Element) => {
         const canvas = element as HTMLCanvasElement;
         const ctx = canvas.getContext("2d");
@@ -89,11 +92,7 @@
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
         camera.begin();
 
-        switch (machine_description.type) {
-            case "decision_tm":
-                draw_decision_turing_machine(ctx, machine_description.machine);
-                break;
-        }
+        machine_renderer(ctx, machine_description.machine);
 
         camera.end();
     };
