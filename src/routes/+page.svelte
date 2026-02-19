@@ -14,6 +14,10 @@
     import Table from "./tab-windows/Table.svelte";
     import Computation from "./tab-windows/Computation.svelte";
 
+    import NewAutomata from "$lib/components/menu/new_automata.svelte";
+    import UploadAutomata from "$lib/components/menu/upload_automata.svelte";
+    import DownloadAutomata from "$lib/components/menu/download_automata.svelte";
+
     let show_description = $state(false);
     let show_table = $state(false);
     let show_diagram = $state(true);
@@ -24,42 +28,9 @@
 
 <header>
     <div class="menu">
-        <button
-            onclick={() => {
-                const data = JSON.stringify(get_machine_description(), null, 2);
-                const blob = new Blob([data], { type: "application/json" });
-                const url = URL.createObjectURL(blob);
-
-                const a = document.createElement("a");
-                a.href = url;
-                a.download = "automata.json";
-                a.click();
-
-                URL.revokeObjectURL(url);
-                a.remove();
-            }}>Download</button
-        >
-        <button
-            onclick={() => {
-                const input = document.createElement("input");
-                input.type = "file";
-                input.accept = ".json";
-
-                input.onchange = () => {
-                    const file = input.files?.[0];
-                    if (!file) return;
-
-                    const reader = new FileReader();
-                    reader.onload = () => {
-                        const parsed = JSON.parse(reader.result as string);
-                        set_machine_description(parsed);
-                    };
-                    reader.readAsText(file);
-                };
-
-                input.click();
-            }}>Upload</button
-        >
+        <DownloadAutomata />
+        <UploadAutomata />
+        <NewAutomata />
     </div>
 
     <nav>
@@ -200,6 +171,7 @@
 
     button {
         background: #fff;
+        color: #000;
         border: 4px solid #eee;
 
         padding: 5px 5px 2px 2px;
