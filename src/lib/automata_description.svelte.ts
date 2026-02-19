@@ -1,5 +1,6 @@
 import {
     type DecisionTuringMachine,
+    default_dtm,
     dtm_properties,
     dtm_type,
 } from "./automata-core/decision-turing-machine";
@@ -7,12 +8,21 @@ import { draw_decision_turing_machine } from "./automata-render/decision-turing-
 
 import {
     type ComputationalTuringMachine,
+    default_ctm,
     ctm_properties,
     ctm_type,
 } from "./automata-core/computation-turing-machine";
 import { draw_computational_turing_machine } from "./automata-render/computation-turing-machine";
 
 export const automata_types = [dtm_type, ctm_type];
+
+export const automata_default = (type: string) => {
+    if (type === dtm_type) {
+        return default_dtm;
+    } else if (type === ctm_type) {
+        return default_ctm;
+    }
+};
 
 export const automata_renderer = (type: string) => {
     if (type === dtm_type) {
@@ -32,7 +42,7 @@ export const automata_properties = (type: string): any => {
     }
 };
 
-export const format_type = (type: string): string => {
+export const automata_type_formatted = (type: string): string => {
     if (type === dtm_type) {
         return "Decision Turing Machine";
     } else if (type === ctm_type) {

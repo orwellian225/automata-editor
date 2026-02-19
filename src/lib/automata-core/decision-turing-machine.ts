@@ -13,6 +13,42 @@ export type DecisionTuringMachine = {
 
 export const dtm_type = "decision_tm";
 
+export const default_dtm: DecisionTuringMachine = {
+    states: [
+        { id: 0, label: "Init", diagram: { position: { x: -100, y: 0 } } },
+        { id: 1, label: "Accept", diagram: { position: { x: 100, y: -75 } } },
+        { id: 2, label: "Reject", diagram: { position: { x: 100, y: 75 } } },
+    ],
+    problem_alphabet: ["0", "1"],
+    tape_alphabet: ["_"],
+    transitions: [
+        {
+            curr_state_id: 0,
+            read_symbol: "0",
+            next_state_id: 1,
+            write_symbol: "0",
+            direction: +1,
+        },
+        {
+            curr_state_id: 0,
+            read_symbol: "1",
+            next_state_id: 2,
+            write_symbol: "1",
+            direction: +1,
+        },
+        {
+            curr_state_id: 0,
+            read_symbol: "_",
+            next_state_id: 2,
+            write_symbol: "_",
+            direction: +1,
+        },
+    ],
+    initial_state: 0,
+    accept_state: 1,
+    reject_state: 2,
+};
+
 export const dtm_properties = {
     state_id_to_state: (
         machine: DecisionTuringMachine,

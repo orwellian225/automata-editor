@@ -12,6 +12,40 @@ export type ComputationalTuringMachine = {
 
 export const ctm_type = "computational_tm";
 
+export const default_ctm: ComputationalTuringMachine = {
+    states: [
+        { id: 0, label: "Init", diagram: { position: { x: -100, y: 0 } } },
+        { id: 1, label: "Halt", diagram: { position: { x: 100, y: 0 } } },
+    ],
+    problem_alphabet: ["0", "1"],
+    tape_alphabet: ["_"],
+    transitions: [
+        {
+            curr_state_id: 0,
+            read_symbol: "0",
+            next_state_id: 1,
+            write_symbol: "0",
+            direction: +1,
+        },
+        {
+            curr_state_id: 0,
+            read_symbol: "1",
+            next_state_id: 1,
+            write_symbol: "1",
+            direction: +1,
+        },
+        {
+            curr_state_id: 0,
+            read_symbol: "_",
+            next_state_id: 1,
+            write_symbol: "_",
+            direction: +1,
+        },
+    ],
+    initial_state: 0,
+    halt_state: 1,
+};
+
 export const ctm_properties = {
     state_id_to_state: (
         machine: ComputationalTuringMachine,
