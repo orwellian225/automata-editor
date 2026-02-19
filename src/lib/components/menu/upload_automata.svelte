@@ -1,5 +1,8 @@
 <script lang="ts">
-    import { set_machine_description } from "$lib/automata_description.svelte";
+    import {
+        AutomatatDescriptionSchema,
+        set_automata_description,
+    } from "$lib/automata_description.svelte";
 </script>
 
 <button
@@ -14,8 +17,12 @@
 
             const reader = new FileReader();
             reader.onload = () => {
-                const parsed = JSON.parse(reader.result as string);
-                set_machine_description(parsed);
+                const parse_res = AutomatatDescriptionSchema.safeParse(
+                    JSON.parse(reader.result as string),
+                );
+                if (parse_res.success) {
+                    set_automata_description(parse_res.data);
+                }
             };
             reader.readAsText(file);
         };

@@ -1,16 +1,16 @@
 <script lang="ts">
     import {
-        get_machine_description,
-        set_machine_description,
+        get_automata_description,
+        set_automata_description,
         automata_types,
         automata_type_formatted,
         automata_default,
-        type MachineDescription,
+        type AutomataDescription,
     } from "$lib/automata_description.svelte";
 
     let new_automata_dialog: HTMLDialogElement;
     let selected_automata_type: string = $derived(
-        get_machine_description().type,
+        get_automata_description().type,
     );
     let automata_name: string = "New Machine";
 </script>
@@ -41,13 +41,13 @@
                     const new_automata = automata_default(
                         selected_automata_type,
                     );
-                    const new_automata_description: MachineDescription = {
+                    const new_automata_description: AutomataDescription = {
                         type: selected_automata_type,
                         name: automata_name,
                         machine: new_automata,
                         test_cases: [],
                     };
-                    set_machine_description(new_automata_description);
+                    set_automata_description(new_automata_description);
                     new_automata_dialog.close();
                 }}
             >

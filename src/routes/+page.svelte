@@ -5,8 +5,9 @@
     import { onMount } from "svelte";
 
     import {
-        get_machine_description,
-        set_machine_description,
+        get_automata_description,
+        set_automata_description,
+        AutomatatDescriptionSchema,
     } from "$lib/automata_description.svelte";
 
     import Diagram from "./tab-windows/Diagram.svelte";
@@ -22,6 +23,30 @@
     let show_table = $state(false);
     let show_diagram = $state(true);
     let show_computation = $state(false);
+
+    onMount(async () => {
+        const raw_automata = page.url.searchParams.get("automata_desc");
+        if (raw_automata) {
+            const parse_res = AutomatatDescriptionSchema.safeParse(
+                await decode(raw_automata),
+            );
+            if (parse_res.success) {
+                set_automata_description(parse_res.data);
+            }
+        }
+    });
+
+    $effect(() => {
+        encode(get_automata_description()).then((encoded_automata: string) => {
+            const url = new URL(page.url);
+            url.searchParams.set("automata_desc", encoded_automata);
+            goto(url.toString(), {
+                replaceState: true,
+                noScroll: true,
+                keepFocus: true,
+            });
+        });
+    });
 </script>
 
 <svelte:window on:wheel|nonpassive={(e: WheelEvent) => e.preventDefault()} />
@@ -33,7 +58,7 @@
         <NewAutomata />
     </div>
 
-    <p>{get_machine_description().name}</p>
+    <p>{get_automata_description().name}</p>
 
     <nav>
         <button

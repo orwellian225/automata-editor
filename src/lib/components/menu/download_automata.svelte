@@ -1,10 +1,10 @@
 <script lang="ts">
-    import { get_machine_description } from "$lib/automata_description.svelte";
+    import { get_automata_description } from "$lib/automata_description.svelte";
 </script>
 
 <button
     onclick={() => {
-        const data = JSON.stringify(get_machine_description(), null, 2);
+        const data = JSON.stringify(get_automata_description(), null, 2);
         const blob = new Blob([data], { type: "application/json" });
         const url = URL.createObjectURL(blob);
 

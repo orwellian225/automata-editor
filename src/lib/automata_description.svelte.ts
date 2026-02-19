@@ -1,5 +1,8 @@
+import { z } from "zod";
+
 import {
     type DecisionTuringMachine,
+    DecisionTuringMachineSchema,
     default_dtm,
     dtm_properties,
     dtm_type,
@@ -8,6 +11,7 @@ import { draw_decision_turing_machine } from "./automata-render/decision-turing-
 
 import {
     type ComputationalTuringMachine,
+    ComputationalTuringMachineSchema,
     default_ctm,
     ctm_properties,
     ctm_type,
@@ -52,18 +56,22 @@ export const automata_type_formatted = (type: string): string => {
     }
 };
 
-export type MachineDescription = {
-    type: string;
-    name: string;
-    machine: DecisionTuringMachine | ComputationalTuringMachine;
-    test_cases: Array<string>;
-};
+export const AutomatatDescriptionSchema = z.object({
+    type: z.string(),
+    name: z.string(),
+    automata: z.union([
+        DecisionTuringMachineSchema,
+        ComputationalTuringMachineSchema,
+    ]),
+    test_cases: z.array(z.string()),
+});
+export type AutomataDescription = z.infer<typeof AutomatatDescriptionSchema>;
 
-const iterate_over: MachineDescription = {
+const iterate_over: AutomataDescription = {
     name: "Iterate Over Entire String",
     type: ctm_type,
     test_cases: [],
-    machine: {
+    automata: {
         states: [
             { id: 0, label: "q0", diagram: { position: { x: -100, y: 0 } } },
             { id: 1, label: "qH", diagram: { position: { x: 100, y: 0 } } },
@@ -97,11 +105,11 @@ const iterate_over: MachineDescription = {
         halt_state: 1,
     },
 };
-const is_odd: MachineDescription = {
+const is_odd: AutomataDescription = {
     name: "Is Odd",
     type: dtm_type,
     test_cases: [],
-    machine: {
+    automata: {
         states: [
             { id: 0, label: "q0", diagram: { position: { x: -200, y: 0 } } },
             { id: 1, label: "q1", diagram: { position: { x: 0, y: 0 } } },
@@ -160,15 +168,15 @@ const is_odd: MachineDescription = {
     },
 };
 
-let machine_description = $state<MachineDescription>({
+let automata_description = $state<AutomataDescription>({
     name: "Default Decision TM",
     test_cases: [],
     type: dtm_type,
-    machine: automata_default(dtm_type),
+    automata: automata_default(dtm_type),
 });
-export function set_machine_description(description: MachineDescription) {
-    machine_description = description;
+export function set_automata_description(description: AutomataDescription) {
+    automata_description = description;
 }
-export function get_machine_description(): MachineDescription {
-    return machine_description;
+export function get_automata_description(): AutomataDescription {
+    return automata_description;
 }

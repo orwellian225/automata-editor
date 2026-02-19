@@ -1,9 +1,16 @@
-export type AutomataStateID = number;
+import { z } from "zod";
 
-export type AutomataState = {
-    id: AutomataStateID;
-    label: string;
-    diagram: {
-        position: { x: number; y: number };
-    };
-};
+export const AutomataStateIDSchema = z.number();
+export type AutomataStateID = z.infer<typeof AutomataStateIDSchema>;
+
+export const AutomataStateSchema = z.object({
+    id: AutomataStateIDSchema,
+    label: z.string(),
+    diagram: z.object({
+        position: z.object({
+            x: z.number(),
+            y: z.number(),
+        }),
+    }),
+});
+export type AutomataState = z.infer<typeof AutomataStateSchema>;

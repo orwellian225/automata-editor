@@ -1,4 +1,5 @@
-import type { AutomataStateID } from "./automata-state";
+import { z } from "zod";
+import { AutomataStateIDSchema } from "./automata-state";
 
 export const direction_to_str = (direction: number) => {
     if (direction === 0) {
@@ -11,10 +12,11 @@ export const direction_to_str = (direction: number) => {
 };
 
 /// State x Symbol -> State x Symbol x Direction
-export type QSQSDTransition = {
-    curr_state_id: AutomataStateID;
-    read_symbol: string;
-    next_state_id: AutomataStateID;
-    write_symbol: string;
-    direction: number;
-};
+export const QSQSDTransitionSchema = z.object({
+    curr_state_id: AutomataStateIDSchema,
+    read_symbol: z.string(),
+    next_state_id: AutomataStateIDSchema,
+    write_symbol: z.string(),
+    direction: z.number(),
+});
+export type QSQSDTransition = z.infer<typeof QSQSDTransitionSchema>;

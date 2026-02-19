@@ -2,11 +2,11 @@
     import type { Attachment } from "svelte/attachments";
     import Camera from "$lib/camera";
     import {
-        get_machine_description,
+        get_automata_description,
         automata_renderer,
     } from "$lib/automata_description.svelte";
 
-    const machine_description = $derived(get_machine_description());
+    const machine_description = $derived(get_automata_description());
     const machine_renderer = $derived(
         automata_renderer(machine_description.type),
     );
@@ -94,7 +94,7 @@
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
         camera.begin();
 
-        machine_renderer(ctx, machine_description.machine);
+        machine_renderer(ctx, machine_description.automata);
 
         camera.end();
     };

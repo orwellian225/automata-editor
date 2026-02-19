@@ -1,9 +1,9 @@
 <script lang="ts">
-    import { get_machine_description } from "$lib/automata_description.svelte";
+    import { get_automata_description } from "$lib/automata_description.svelte";
     import { direction_to_str } from "$lib/automata-core/automata-transition";
 
-    const machine_description = $derived(get_machine_description());
-    const transitions = $derived(machine_description.machine.transitions);
+    const machine_description = $derived(get_automata_description());
+    const transitions = $derived(machine_description.automata.transitions);
 </script>
 
 <div>
@@ -29,10 +29,11 @@
                     write_symbol,
                     direction,
                 } = transition}
-                {@const current_state = machine_description.machine.states.find(
-                    (state) => state.id === curr_state_id,
-                )}
-                {@const next_state = machine_description.machine.states.find(
+                {@const current_state =
+                    machine_description.automata.states.find(
+                        (state) => state.id === curr_state_id,
+                    )}
+                {@const next_state = machine_description.automata.states.find(
                     (state) => state.id === next_state_id,
                 )}
                 {#if current_state && next_state}

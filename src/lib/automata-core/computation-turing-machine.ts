@@ -1,14 +1,23 @@
-import type { AutomataState, AutomataStateID } from "./automata-state";
-import type { QSQSDTransition } from "./automata-transition";
+import { z } from "zod";
+import {
+    AutomataStateSchema,
+    AutomataStateIDSchema,
+    type AutomataStateID,
+    type AutomataState,
+} from "./automata-state";
+import { QSQSDTransitionSchema } from "./automata-transition";
 
-export type ComputationalTuringMachine = {
-    states: Array<AutomataState>;
-    problem_alphabet: Array<string>;
-    tape_alphabet: Array<string>;
-    transitions: Array<QSQSDTransition>;
-    initial_state: AutomataStateID;
-    halt_state: AutomataStateID;
-};
+export const ComputationalTuringMachineSchema = z.object({
+    states: z.array(AutomataStateSchema),
+    problem_alphabet: z.array(z.string()),
+    tape_alphabet: z.array(z.string()),
+    transitions: z.array(QSQSDTransitionSchema),
+    initial_state: AutomataStateIDSchema,
+    halt_state: AutomataStateIDSchema,
+});
+export type ComputationalTuringMachine = z.infer<
+    typeof ComputationalTuringMachineSchema
+>;
 
 export const ctm_type = "computational_tm";
 

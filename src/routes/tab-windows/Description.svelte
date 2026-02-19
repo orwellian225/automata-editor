@@ -1,30 +1,30 @@
 <script lang="ts">
     import type { AutomataStateID } from "$lib/automata-core/automata-state";
     import {
-        get_machine_description,
+        get_automata_description,
         automata_properties,
         automata_type_formatted,
     } from "$lib/automata_description.svelte";
 
-    const machine_description = $derived(get_machine_description());
+    const machine_description = $derived(get_automata_description());
     const machine_props = $derived(
         automata_properties(machine_description.type),
     );
 
     const num_transitions = $derived(
-        machine_props.expected_transitions(machine_description.machine),
+        machine_props.expected_transitions(machine_description.automata),
     );
     const is_deterministic = $derived(
-        machine_props.is_deterministic(machine_description.machine),
+        machine_props.is_deterministic(machine_description.automata),
     );
     const initial_state = $derived(
         machine_props.state_id_to_state(
-            machine_description.machine,
-            machine_description.machine.initial_state,
+            machine_description.automata,
+            machine_description.automata.initial_state,
         ),
     );
     const notable_states = $derived(
-        machine_props.notable_states(machine_description.machine),
+        machine_props.notable_states(machine_description.automata),
     );
 </script>
 
@@ -38,7 +38,7 @@
             <tr>
                 <th>States</th>
                 <td
-                    >{machine_description.machine.states
+                    >{machine_description.automata.states
                         .map((state) => state.label)
                         .join(", ")}</td
                 >
@@ -46,7 +46,7 @@
             <tr>
                 <th>Problem alphabet</th>
                 <td
-                    >{machine_description.machine.problem_alphabet
+                    >{machine_description.automata.problem_alphabet
                         .map((sym) => `'${sym}'`)
                         .join(", ")}</td
                 >
@@ -54,8 +54,8 @@
             <tr>
                 <th>Tape alphabet</th>
                 <td
-                    >{machine_description.machine.tape_alphabet
-                        .concat(machine_description.machine.problem_alphabet)
+                    >{machine_description.automata.tape_alphabet
+                        .concat(machine_description.automata.problem_alphabet)
                         .map((sym) => `'${sym}'`)
                         .join(", ")}</td
                 >

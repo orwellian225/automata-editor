@@ -1,15 +1,24 @@
-import type { AutomataState, AutomataStateID } from "./automata-state";
-import type { QSQSDTransition } from "./automata-transition";
+import { z } from "zod";
 
-export type DecisionTuringMachine = {
-    states: Array<AutomataState>;
-    problem_alphabet: Array<string>;
-    tape_alphabet: Array<string>;
-    transitions: Array<QSQSDTransition>;
-    initial_state: AutomataStateID;
-    accept_state: AutomataStateID;
-    reject_state: AutomataStateID;
-};
+import {
+    AutomataStateSchema,
+    AutomataStateIDSchema,
+    type AutomataState,
+    type AutomataStateID,
+} from "./automata-state";
+import { QSQSDTransitionSchema } from "./automata-transition";
+
+export const DecisionTuringMachineSchema = z.object({
+    states: z.array(AutomataStateSchema),
+    problem_alphabet: z.array(z.string()),
+    tape_alphabet: z.array(z.string()),
+    transitions: z.array(QSQSDTransitionSchema),
+    initial_state: AutomataStateIDSchema,
+    accept_state: AutomataStateIDSchema,
+    reject_state: AutomataStateIDSchema,
+});
+
+export type DecisionTuringMachine = z.infer<typeof DecisionTuringMachineSchema>;
 
 export const dtm_type = "decision_tm";
 
