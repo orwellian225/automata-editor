@@ -33,6 +33,8 @@
         <NewAutomata />
     </div>
 
+    <p>{get_machine_description().name}</p>
+
     <nav>
         <button
             class:show-tab={show_description}
@@ -186,9 +188,11 @@
         border-bottom: 4px solid #000;
     }
 
-    .menu button {
-        width: 120px;
-        height: fit-content;
+    .menu {
+        width: 20%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
     }
 
     nav button {
@@ -201,7 +205,14 @@
     }
 
     @media (max-width: 800px) {
-        .menu button,
+        .menu {
+            width: 35%;
+        }
+
+        header p {
+            display: none;
+        }
+
         nav button {
             width: 80px;
             overflow: hidden;

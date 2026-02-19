@@ -22,6 +22,8 @@ export const automata_default = (type: string) => {
     } else if (type === ctm_type) {
         return default_ctm;
     }
+
+    return default_dtm;
 };
 
 export const automata_renderer = (type: string) => {
@@ -158,7 +160,12 @@ const is_odd: MachineDescription = {
     },
 };
 
-let machine_description = $state<MachineDescription>(iterate_over);
+let machine_description = $state<MachineDescription>({
+    name: "Default Decision TM",
+    test_cases: [],
+    type: dtm_type,
+    machine: automata_default(dtm_type),
+});
 export function set_machine_description(description: MachineDescription) {
     machine_description = description;
 }
