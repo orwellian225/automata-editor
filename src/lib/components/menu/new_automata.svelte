@@ -1,4 +1,7 @@
 <script lang="ts">
+    import { page } from "$app/state";
+    import { goto } from "$app/navigation";
+
     import {
         get_automata_description,
         set_automata_description,
@@ -46,10 +49,18 @@
                     const new_automata_description: AutomataDescription = {
                         type: selected_automata_type,
                         name: automata_name,
-                        machine: new_automata,
+                        automata: new_automata,
                         test_cases: [],
                     };
                     set_automata_description(new_automata_description);
+
+                    const url = new URL(page.url);
+                    goto(url.toString(), {
+                        replaceState: true,
+                        noScroll: true,
+                        keepFocus: true,
+                    });
+
                     new_automata_dialog.close();
                 }}
             >
