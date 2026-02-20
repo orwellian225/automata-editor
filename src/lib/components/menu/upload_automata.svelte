@@ -1,8 +1,6 @@
 <script lang="ts">
-    import {
-        AutomatatDescriptionSchema,
-        set_automata_description,
-    } from "$lib/automata_description.svelte";
+    import { set_automata_description } from "$lib/automata_description.svelte";
+    import { AutomatatDescriptionSchema } from "$lib/automata-core/automata-description";
 </script>
 
 <button

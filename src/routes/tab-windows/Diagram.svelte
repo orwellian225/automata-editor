@@ -1,10 +1,8 @@
 <script lang="ts">
     import type { Attachment } from "svelte/attachments";
     import Camera from "$lib/camera";
-    import {
-        get_automata_description,
-        automata_renderer,
-    } from "$lib/automata_description.svelte";
+    import { get_automata_description } from "$lib/automata_description.svelte";
+    import { automata_renderer } from "$lib/automata-render/automata-renderer";
 
     const machine_description = $derived(get_automata_description());
     const machine_renderer = $derived(

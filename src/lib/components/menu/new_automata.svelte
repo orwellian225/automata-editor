@@ -2,17 +2,19 @@
     import {
         get_automata_description,
         set_automata_description,
+    } from "$lib/automata_description.svelte";
+    import {
         automata_types,
         automata_type_formatted,
         automata_default,
         type AutomataDescription,
-    } from "$lib/automata_description.svelte";
+    } from "$lib/automata-core/automata-description";
 
     let new_automata_dialog: HTMLDialogElement;
     let selected_automata_type: string = $derived(
         get_automata_description().type,
     );
-    let automata_name: string = "New Machine";
+    let automata_name: string = $state("New Machine");
 </script>
 
 <button onclick={() => new_automata_dialog.showModal()}> New </button>

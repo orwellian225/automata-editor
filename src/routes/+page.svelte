@@ -7,8 +7,9 @@
     import {
         get_automata_description,
         set_automata_description,
-        AutomatatDescriptionSchema,
     } from "$lib/automata_description.svelte";
+
+    import { AutomatatDescriptionSchema } from "$lib/automata-core/automata-description";
 
     import Diagram from "./tab-windows/Diagram.svelte";
     import Description from "./tab-windows/Description.svelte";

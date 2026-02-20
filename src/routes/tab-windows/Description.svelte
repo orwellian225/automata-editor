@@ -1,10 +1,9 @@
 <script lang="ts">
-    import type { AutomataStateID } from "$lib/automata-core/automata-state";
     import {
-        get_automata_description,
         automata_properties,
         automata_type_formatted,
-    } from "$lib/automata_description.svelte";
+    } from "$lib/automata-core/automata-description";
+    import { get_automata_description } from "$lib/automata_description.svelte";
 
     const machine_description = $derived(get_automata_description());
     const machine_props = $derived(
