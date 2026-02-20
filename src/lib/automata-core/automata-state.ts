@@ -11,6 +11,7 @@ export const AutomataStateSchema = z.object({
             x: z.number(),
             y: z.number(),
         }),
+        out_angle: z.number(),
     }),
 });
 export type AutomataState = z.infer<typeof AutomataStateSchema>;

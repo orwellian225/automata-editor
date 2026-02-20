@@ -211,20 +211,19 @@ function draw_qsqsd_transition_to_self(
     ctx.fillStyle = transition_rendering_params.stroke_style;
     ctx.lineWidth = transition_rendering_params.line_width;
 
-    const origin_angle = -Math.PI / 2;
-    const terminal_angle = -Math.PI / 4;
+    const terminal_angle = curr_state.diagram.out_angle + Math.PI / 4;
 
     const origin = {
         x:
             curr_state.diagram.position.x +
             (state_rendering_params.radius +
                 state_rendering_params.offset_radius) *
-                Math.cos(origin_angle),
+                Math.cos(curr_state.diagram.out_angle),
         y:
             curr_state.diagram.position.y +
             (state_rendering_params.radius +
                 state_rendering_params.offset_radius) *
-                Math.sin(origin_angle),
+                Math.sin(curr_state.diagram.out_angle),
     };
 
     const terminal = {
@@ -244,11 +243,11 @@ function draw_qsqsd_transition_to_self(
         x:
             origin.x +
             transition_rendering_params.bezier_control_radius *
-                Math.cos(origin_angle),
+                Math.cos(curr_state.diagram.out_angle),
         y:
             origin.y +
             transition_rendering_params.bezier_control_radius *
-                Math.sin(origin_angle),
+                Math.sin(curr_state.diagram.out_angle),
     };
 
     const control_point_2 = {
@@ -328,6 +327,9 @@ function draw_qsqsd_transition_to_self(
     ctx.closePath();
     ctx.fill();
 
+    const is_upside_down =
+        text_angle > Math.PI / 2 || text_angle < -Math.PI / 2;
+
     // Transition Info
     for (const [
         idx,
@@ -338,14 +340,21 @@ function draw_qsqsd_transition_to_self(
         ctx.textBaseline = "middle";
 
         ctx.save();
+        ctx.translate(mid_x, mid_y);
+
+        // Upside down
+
         ctx.translate(
-            mid_x + offset_x * Math.abs(offset) * (idx + 1),
-            mid_y + offset_y * Math.abs(offset) * (idx + 1),
+            offset_x * Math.abs(offset) * (idx + 1),
+            offset_y * Math.abs(offset) * (idx + 1),
         );
-        ctx.rotate(text_angle);
-        if (text_angle > Math.PI / 2 || text_angle < -Math.PI / 2) {
+
+        if (is_upside_down) {
             ctx.rotate(Math.PI);
         }
+
+        ctx.rotate(text_angle);
+
         ctx.fillText(
             `${read_symbol} → ${write_symbol}, ${direction_to_str(direction)}`,
             0,

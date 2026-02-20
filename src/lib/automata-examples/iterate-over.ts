@@ -8,8 +8,22 @@ export const iterate_over_desc: AutomataDescription = {
     test_cases: [],
     automata: {
         states: [
-            { id: 0, label: "q0", diagram: { position: { x: -100, y: 0 } } },
-            { id: 1, label: "qH", diagram: { position: { x: 100, y: 0 } } },
+            {
+                id: 0,
+                label: "q0",
+                diagram: {
+                    position: { x: -100, y: 0 },
+                    out_angle: -Math.PI / 2,
+                },
+            },
+            {
+                id: 1,
+                label: "qH",
+                diagram: {
+                    position: { x: 100, y: 0 },
+                    out_angle: -Math.PI / 2,
+                },
+            },
         ],
         problem_alphabet: ["0", "1"],
         tape_alphabet: ["_"],

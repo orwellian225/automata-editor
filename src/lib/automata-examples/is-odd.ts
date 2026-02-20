@@ -8,10 +8,35 @@ export const is_odd_desc: AutomataDescription = {
     test_cases: [],
     automata: {
         states: [
-            { id: 0, label: "q0", diagram: { position: { x: -200, y: 0 } } },
-            { id: 1, label: "q1", diagram: { position: { x: 0, y: 0 } } },
-            { id: 2, label: "qA", diagram: { position: { x: 200, y: -75 } } },
-            { id: 3, label: "qR", diagram: { position: { x: 200, y: 75 } } },
+            {
+                id: 0,
+                label: "q0",
+                diagram: {
+                    position: { x: -200, y: 0 },
+                    out_angle: -Math.PI / 2,
+                },
+            },
+            {
+                id: 1,
+                label: "q1",
+                diagram: { position: { x: 0, y: 0 }, out_angle: -Math.PI / 2 },
+            },
+            {
+                id: 2,
+                label: "qA",
+                diagram: {
+                    position: { x: 200, y: -75 },
+                    out_angle: -Math.PI / 2,
+                },
+            },
+            {
+                id: 3,
+                label: "qR",
+                diagram: {
+                    position: { x: 200, y: 75 },
+                    out_angle: -Math.PI / 2,
+                },
+            },
         ],
         problem_alphabet: ["0", "1"],
         tape_alphabet: ["_"],

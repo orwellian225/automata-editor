@@ -7,12 +7,54 @@ export const same_symbol_count_desc: AutomataDescription = {
     test_cases: [],
     automata: {
         states: [
-            { id: 0, label: "q0", diagram: { position: { x: -150, y: 0 } } },
-            { id: 1, label: "qA", diagram: { position: { x: -300, y: 0 } } },
-            { id: 2, label: "qR", diagram: { position: { x: 300, y: 0 } } },
-            { id: 3, label: "q1", diagram: { position: { x: 0, y: -150 } } },
-            { id: 4, label: "q2", diagram: { position: { x: 0, y: 150 } } },
-            { id: 5, label: "q3", diagram: { position: { x: 100, y: 0 } } },
+            {
+                id: 0,
+                label: "q0",
+                diagram: {
+                    position: { x: -150, y: 0 },
+                    out_angle: (-3 * Math.PI) / 4,
+                },
+            },
+            {
+                id: 1,
+                label: "qA",
+                diagram: {
+                    position: { x: -300, y: 0 },
+                    out_angle: -Math.PI / 2,
+                },
+            },
+            {
+                id: 2,
+                label: "qR",
+                diagram: {
+                    position: { x: 300, y: 0 },
+                    out_angle: -Math.PI / 2,
+                },
+            },
+            {
+                id: 3,
+                label: "q1",
+                diagram: {
+                    position: { x: 0, y: -150 },
+                    out_angle: -Math.PI / 2,
+                },
+            },
+            {
+                id: 4,
+                label: "q2",
+                diagram: {
+                    position: { x: 0, y: 150 },
+                    out_angle: Math.PI / 4,
+                },
+            },
+            {
+                id: 5,
+                label: "q3",
+                diagram: {
+                    position: { x: 100, y: 0 },
+                    out_angle: -Math.PI / 8,
+                },
+            },
         ],
         problem_alphabet: ["0", "1"],
         tape_alphabet: ["_", "#"],

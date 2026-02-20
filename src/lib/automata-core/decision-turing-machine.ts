@@ -24,9 +24,21 @@ export const dtm_type = "decision_tm";
 
 export const default_dtm: DecisionTuringMachine = {
     states: [
-        { id: 0, label: "qI", diagram: { position: { x: -100, y: 0 } } },
-        { id: 1, label: "qA", diagram: { position: { x: 100, y: -75 } } },
-        { id: 2, label: "qR", diagram: { position: { x: 100, y: 75 } } },
+        {
+            id: 0,
+            label: "qI",
+            diagram: { position: { x: -100, y: 0 }, out_angle: -Math.PI / 2 },
+        },
+        {
+            id: 1,
+            label: "qA",
+            diagram: { position: { x: 100, y: -75 }, out_angle: -Math.PI / 2 },
+        },
+        {
+            id: 2,
+            label: "qR",
+            diagram: { position: { x: 100, y: 75 }, out_angle: -Math.PI / 2 },
+        },
     ],
     problem_alphabet: ["0", "1"],
     tape_alphabet: ["_"],
