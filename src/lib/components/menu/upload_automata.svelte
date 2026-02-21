@@ -1,4 +1,7 @@
 <script lang="ts">
+    import { page } from "$app/state";
+    import { goto } from "$app/navigation";
+
     import { set_automata_description } from "$lib/automata_description.svelte";
     import { AutomatatDescriptionSchema } from "$lib/automata-core/automata-description";
 </script>
@@ -18,6 +21,12 @@
                 const parse_res = AutomatatDescriptionSchema.safeParse(
                     JSON.parse(reader.result as string),
                 );
+                const url = new URL(page.url);
+                goto(url.toString(), {
+                    replaceState: true,
+                    noScroll: true,
+                    keepFocus: true,
+                });
                 if (parse_res.success) {
                     set_automata_description(parse_res.data);
                 }
