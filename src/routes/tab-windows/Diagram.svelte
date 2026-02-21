@@ -1,4 +1,6 @@
 <script lang="ts">
+    import Stats from "stats.js";
+
     import type { Attachment } from "svelte/attachments";
     import Camera from "$lib/camera";
     import { get_automata_description } from "$lib/automata_description.svelte";
@@ -8,6 +10,7 @@
     const machine_renderer = $derived(
         automata_renderer(machine_description.type),
     );
+
     const attach_diagram_canvas: Attachment = (element: Element) => {
         const canvas = element as HTMLCanvasElement;
         const ctx = canvas.getContext("2d");
@@ -18,22 +21,43 @@
 
         const camera = new Camera(ctx);
 
+        let frame_id: number = 0;
+        let needs_redraw = false;
+        let frame_pending = false;
+        const request_frame = () => {
+            if (frame_pending) return;
+
+            frame_pending = true;
+            frame_id = requestAnimationFrame(
+                (timestamp: DOMHighResTimeStamp) => {
+                    frame_pending = false;
+
+                    if (needs_redraw) {
+                        needs_redraw = false;
+                        draw_diagram(ctx, camera, timestamp);
+                    }
+                },
+            );
+        };
+
         const observer = new ResizeObserver((entries) => {
             const { width, height } = entries[0].contentRect;
             canvas.width = width;
             canvas.height = height;
             camera.updateViewport();
+
+            needs_redraw = true;
+            request_frame();
         });
 
         const resize_target = canvas.parentElement ?? canvas;
         observer.observe(resize_target);
 
-        let frame_id: number = 0;
-        const loop = (timestamp: DOMHighResTimeStamp) => {
-            draw_diagram(ctx, camera, timestamp);
-            frame_id = requestAnimationFrame(loop);
-        };
-        frame_id = requestAnimationFrame(loop);
+        $effect(() => {
+            machine_description.automata;
+            needs_redraw = true;
+            request_frame();
+        });
 
         let camera_panning = false;
         const camera_on_mousedown = (event: MouseEvent) => {
@@ -55,10 +79,14 @@
                     camera.lookAt[0] - event.movementX,
                     camera.lookAt[1] - event.movementY,
                 );
+                needs_redraw = true;
+                request_frame();
             }
         };
         const camera_on_wheel = (event: WheelEvent) => {
             camera.zoomTo(camera.distance + event.deltaY / 2);
+            needs_redraw = true;
+            request_frame();
         };
         const camera_on_contextmenu = (event: MouseEvent) => {
             event.preventDefault();
