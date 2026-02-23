@@ -17,8 +17,42 @@ export const DecisionTuringMachineSchema = z.object({
     accept_state: AutomataStateIDSchema,
     reject_state: AutomataStateIDSchema,
 });
-
 export type DecisionTuringMachine = z.infer<typeof DecisionTuringMachineSchema>;
+
+export const ConfigDTMSchema = z.object({
+    state_id: AutomataStateIDSchema,
+    tape: z.array(z.string()),
+    pos: z.number(),
+    status: z.union([
+        z.literal("Running"),
+        z.literal("Accepted"),
+        z.literal("Rejected"),
+    ]),
+});
+export type ConfigDTM = z.infer<typeof ConfigDTMSchema>;
+
+export const ComputeDTMSchema = z.object({
+    active_config: ConfigDTMSchema,
+
+    input: z.string(),
+    output: z
+        .union([
+            z.literal("Accepted"),
+            z.literal("Rejected"),
+            z.literal("Timeout"),
+        ])
+        .optional(),
+
+    time_usage: z.number(),
+    space_usage: z.number(),
+
+    time_limit: z.number(),
+    space_limit: z.number(),
+});
+export type ComputeDTM = z.infer<typeof ComputeDTMSchema>;
+export const computation_dtm_is_stopped = (computation: ComputeDTM) => {
+    return computation.active_config.status !== "Running";
+};
 
 export const dtm_type = "decision_tm";
 

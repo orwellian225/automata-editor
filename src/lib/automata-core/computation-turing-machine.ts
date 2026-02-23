@@ -19,6 +19,31 @@ export type ComputationalTuringMachine = z.infer<
     typeof ComputationalTuringMachineSchema
 >;
 
+export const ConfigCTMSchema = z.object({
+    state_id: AutomataStateIDSchema,
+    tape: z.array(z.string()),
+    pos: z.number(),
+    status: z.union([z.literal("Running"), z.literal("Halted")]),
+});
+export type ConfigCTM = z.infer<typeof ConfigCTMSchema>;
+export const computation_ctm_is_stopped = (computation: ComputeCTM) => {
+    return computation.active_config.status !== "Running";
+};
+
+export const ComputeCTMSchema = z.object({
+    active_config: ConfigCTMSchema,
+
+    input: z.string(),
+    output: z.string().optional(),
+
+    time_usage: z.number(),
+    space_usage: z.number(),
+
+    time_limit: z.number(),
+    space_limit: z.number(),
+});
+export type ComputeCTM = z.infer<typeof ComputeCTMSchema>;
+
 export const ctm_type = "computational_tm";
 
 export const default_ctm: ComputationalTuringMachine = {
