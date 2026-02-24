@@ -6,6 +6,7 @@ import {
     type AutomataState,
 } from "./automata-state";
 import { QSQSDTransitionSchema } from "./automata-transition";
+import type { AutomataTransitionTableRules } from "./automata-description";
 
 export const ComputationalTuringMachineSchema = z.object({
     states: z.array(AutomataStateSchema),
@@ -150,4 +151,65 @@ export const ctm_properties = {
 
         return true;
     },
+};
+
+export const ctm_transition_table = (
+    machine: ComputationalTuringMachine,
+    rules: AutomataTransitionTableRules,
+    num_transitions: number | undefined,
+) => {
+    const state_repr = (id: AutomataStateID) => {
+        if (rules.states === "counter") {
+            return id.toString(rules.counter_base);
+        } else {
+            return machine.states.find((s) => s.id === id)?.label ?? "qx";
+        }
+    };
+
+    const symbol_repr = (sym: string, index: number): string => {
+        if (rules.symbols === "counter") {
+            return index.toString(rules.counter_base);
+        } else {
+            return sym;
+        }
+    };
+
+    const direction_repr = (direction: number) => {
+        if (rules.direction === "counter") {
+            return direction.toString(rules.counter_base);
+        } else {
+            return direction_to_str(direction);
+        }
+    };
+
+    const symbol_index = new Map<string, number>();
+    machine.transitions.forEach((t) => {
+        if (!symbol_index.has(t.read_symbol))
+            symbol_index.set(t.read_symbol, symbol_index.size);
+        if (!symbol_index.has(t.write_symbol))
+            symbol_index.set(t.write_symbol, symbol_index.size);
+    });
+
+    const transitions = num_transitions
+        ? machine.transitions.slice(0, num_transitions)
+        : machine.transitions;
+
+    const represented_transitions = transitions.map((transition) => {
+        const fields = [
+            state_repr(transition.curr_state_id),
+            symbol_repr(
+                transition.read_symbol,
+                symbol_index.get(transition.read_symbol)!,
+            ),
+            state_repr(transition.next_state_id),
+            symbol_repr(
+                transition.write_symbol,
+                symbol_index.get(transition.write_symbol)!,
+            ),
+            direction_repr(transition.direction),
+        ];
+        return fields.join(rules.field_seperator);
+    });
+
+    return represented_transitions.join(rules.transition_seperator);
 };

@@ -1,13 +1,16 @@
 <script lang="ts">
     import { get_automata_description } from "$lib/automata_description.svelte";
     import { direction_to_str } from "$lib/automata-core/automata-transition";
+    import CopyTable from "$lib/components/table/copy_table.svelte";
 
     const machine_description = $derived(get_automata_description());
     const transitions = $derived(machine_description.automata.transitions);
 </script>
 
 <div>
-    <h1>Transition Table</h1>
+    <span>
+        <CopyTable />
+    </span>
 
     <table>
         <thead>
@@ -68,6 +71,11 @@
         align-items: start;
     }
 
+    span {
+        margin-bottom: 10px;
+        padding: 5px;
+    }
+
     table {
         width: 100%;
 
@@ -75,6 +83,10 @@
         border-collapse: collapse;
 
         text-align: center;
+    }
+
+    tbody {
+        overflow-y: auto;
     }
 
     thead {

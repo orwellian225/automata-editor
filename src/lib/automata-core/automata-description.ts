@@ -5,6 +5,7 @@ import {
     default_dtm,
     dtm_properties,
     dtm_type,
+    dtm_transition_table,
 } from "./decision-turing-machine";
 
 import {
@@ -12,6 +13,7 @@ import {
     default_ctm,
     ctm_properties,
     ctm_type,
+    ctm_transition_table,
 } from "./computation-turing-machine";
 
 export const AutomatatDescriptionSchema = z.object({
@@ -51,4 +53,34 @@ export const automata_type_formatted = (type: string): string => {
     } else if (type === ctm_type) {
         return "Computational Turing Machine";
     }
+};
+
+export type AutomataTransitionTableRules = {
+    states: "counter" | "symbol";
+    symbols: "counter" | "symbol";
+    direction: "counter" | "symbol";
+    counter_base: number;
+    field_seperator: string;
+    transition_seperator: string;
+};
+export const automata_transition_table = (
+    automata_desc: AutomataDescription,
+    rules: AutomataTransitionTableRules,
+    num_transitions: number | undefined,
+) => {
+    if (automata_desc.type === dtm_type) {
+        return dtm_transition_table(
+            automata_desc.automata,
+            rules,
+            num_transitions,
+        );
+    } else if (automata_desc.type === ctm_type) {
+        return ctm_transition_table(
+            automata_desc.automata,
+            rules,
+            num_transitions,
+        );
+    }
+
+    return "";
 };
