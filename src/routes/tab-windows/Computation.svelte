@@ -2,17 +2,14 @@
     import { get_automata_description } from "$lib/automata_description.svelte";
 
     let cases: Array<string> = $derived(get_automata_description().test_cases);
-    let current_tape_case = $state(0);
     let show_resource_usage = $state(false);
 </script>
 
 <div>
-    <h1>Computations</h1>
-
     <span>
         <button>Run All</button>
         <button onclick={() => (show_resource_usage = !show_resource_usage)}
-            >Show Resource Usage</button
+            >{show_resource_usage ? "Hide" : "Show"} Resource Usage</button
         >
     </span>
 
@@ -32,18 +29,12 @@
         <tbody>
             {#each cases as input_str, i}
                 <tr>
-                    <td>{input_str}</td>
+                    <td>{`'${input_str}'`}</td>
                     <td>None</td>
                     <td>None</td>
                     <td class:hide={!show_resource_usage}>0</td>
                     <td class:hide={!show_resource_usage}>0</td>
-                    <td
-                        ><button
-                            class:hide={i === current_tape_case}
-                            onclick={() => (current_tape_case = i)}
-                            >Visualise Tape</button
-                        ></td
-                    >
+                    <td><button>Set Active</button></td>
                     <td><button>Run</button></td>
                 </tr>
             {/each}
@@ -70,6 +61,20 @@
         align-items: start;
     }
 
+    span button {
+        width: 200px;
+        padding: 5px 2px;
+        border: 2px solid #ccc;
+        background-color: #fff;
+    }
+
+    span button:hover {
+        border: 2px solid #888;
+    }
+    span button:active {
+        border: 2px solid #000;
+    }
+
     table {
         width: 100%;
         border: 1px solid #ccc;
@@ -87,16 +92,21 @@
     }
 
     td button {
-        border: 3px solid #eee;
+        width: 100px;
+        border: 0;
+        border-right: 2px solid #ccc;
+        border-left: 2px solid #ccc;
         background-color: #fff;
     }
 
     td button:hover {
-        border: 3px solid #888;
+        border-right: 2px solid #888;
+        border-left: 2px solid #888;
     }
 
     td button:active {
-        border: 3px solid #000;
+        border-right: 2px solid #000;
+        border-left: 2px solid #000;
     }
 
     .hide {

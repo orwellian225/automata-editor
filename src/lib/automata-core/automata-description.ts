@@ -58,7 +58,7 @@ export const automata_type_formatted = (type: string): string => {
 export type AutomataTransitionTableRules = {
     states: "counter" | "symbol";
     symbols: "counter" | "symbol";
-    direction: "counter" | "symbol";
+    direction: "counter" | "symbol" | "integer";
     counter_base: number;
     field_seperator: string;
     transition_seperator: string;

@@ -52,6 +52,7 @@
             <select name="dir_repr" bind:value={table_rules.direction}>
                 <option value="symbol">Symbol</option>
                 <option value="counter">Counter</option>
+                <option value="integer">Integer</option>
             </select>
         </span>
 

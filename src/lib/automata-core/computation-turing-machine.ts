@@ -5,7 +5,7 @@ import {
     type AutomataStateID,
     type AutomataState,
 } from "./automata-state";
-import { QSQSDTransitionSchema } from "./automata-transition";
+import { QSQSDTransitionSchema, direction_to_str } from "./automata-transition";
 import type { AutomataTransitionTableRules } from "./automata-description";
 
 export const ComputationalTuringMachineSchema = z.object({
@@ -177,6 +177,14 @@ export const ctm_transition_table = (
     const direction_repr = (direction: number) => {
         if (rules.direction === "counter") {
             return direction.toString(rules.counter_base);
+        } else if (rules.direction === "integer") {
+            if (direction === 0) {
+                return "0";
+            } else if (direction < 0) {
+                return `1${(Math.abs(direction) - 1).toString(rules.counter_base)}`;
+            } else {
+                return `0${(Math.abs(direction) - 1).toString(rules.counter_base)}`;
+            }
         } else {
             return direction_to_str(direction);
         }

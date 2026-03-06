@@ -1,58 +1,48 @@
 import { dtm_type } from "$lib/automata-core/decision-turing-machine";
 import type { AutomataDescription } from "$lib/automata-core/automata-description";
 
-export const same_symbol_count_desc: AutomataDescription = {
-    name: "Same Symbol Count",
+export const anbn_desc: AutomataDescription = {
+    name: "0^n 1^n",
     type: dtm_type,
-    test_cases: ["", "0011", "0"],
+    test_cases: [],
     automata: {
         states: [
             {
                 id: 0,
                 label: "q0",
-                diagram: {
-                    position: { x: -150, y: 0 },
-                    out_angle: (-3 * Math.PI) / 4,
-                },
+                diagram: { position: { x: -100, y: -100 }, out_angle: 0 },
             },
+
             {
                 id: 1,
-                label: "qA",
-                diagram: {
-                    position: { x: -300, y: 0 },
-                    out_angle: -Math.PI / 2,
-                },
+                label: "q1",
+                diagram: { position: { x: -250, y: -100 }, out_angle: 0 },
             },
             {
                 id: 2,
-                label: "qR",
-                diagram: {
-                    position: { x: 300, y: 0 },
-                    out_angle: -Math.PI / 2,
-                },
+                label: "q2",
+                diagram: { position: { x: 0, y: 0 }, out_angle: 0 },
             },
+
             {
                 id: 3,
-                label: "q1",
+                label: "q3",
                 diagram: {
-                    position: { x: 0, y: -150 },
-                    out_angle: -Math.PI / 2,
+                    position: { x: -100, y: 100 },
+                    out_angle: Math.PI / 2,
                 },
             },
             {
                 id: 4,
-                label: "q2",
-                diagram: {
-                    position: { x: 0, y: 150 },
-                    out_angle: Math.PI / 4,
-                },
+                label: "q4",
+                diagram: { position: { x: 100, y: 100 }, out_angle: 0 },
             },
             {
                 id: 5,
-                label: "q3",
+                label: "q5",
                 diagram: {
-                    position: { x: 100, y: 0 },
-                    out_angle: -Math.PI / 8,
+                    position: { x: 100, y: -100 },
+                    out_angle: -Math.PI / 2,
                 },
             },
         ],
@@ -68,46 +58,32 @@ export const same_symbol_count_desc: AutomataDescription = {
             },
             {
                 curr_state_id: 0,
-                read_symbol: "#",
-                next_state_id: 0,
-                write_symbol: "#",
-                direction: +1,
-            },
-            {
-                curr_state_id: 0,
                 read_symbol: "0",
                 next_state_id: 3,
-                write_symbol: "#",
+                write_symbol: "_",
                 direction: +1,
             },
             {
                 curr_state_id: 0,
                 read_symbol: "1",
-                next_state_id: 4,
-                write_symbol: "#",
+                next_state_id: 2,
+                write_symbol: "_",
                 direction: +1,
             },
 
             {
                 curr_state_id: 3,
                 read_symbol: "_",
-                next_state_id: 2,
+                next_state_id: 4,
                 write_symbol: "_",
-                direction: +1,
-            },
-            {
-                curr_state_id: 3,
-                read_symbol: "#",
-                next_state_id: 3,
-                write_symbol: "#",
-                direction: +1,
+                direction: -1,
             },
             {
                 curr_state_id: 3,
                 read_symbol: "0",
-                next_state_id: 5,
-                write_symbol: "#",
-                direction: -1,
+                next_state_id: 3,
+                write_symbol: "0",
+                direction: +1,
             },
             {
                 curr_state_id: 3,
@@ -126,15 +102,8 @@ export const same_symbol_count_desc: AutomataDescription = {
             },
             {
                 curr_state_id: 4,
-                read_symbol: "#",
-                next_state_id: 4,
-                write_symbol: "#",
-                direction: +1,
-            },
-            {
-                curr_state_id: 4,
                 read_symbol: "0",
-                next_state_id: 4,
+                next_state_id: 2,
                 write_symbol: "0",
                 direction: +1,
             },
@@ -142,7 +111,7 @@ export const same_symbol_count_desc: AutomataDescription = {
                 curr_state_id: 4,
                 read_symbol: "1",
                 next_state_id: 5,
-                write_symbol: "#",
+                write_symbol: "_",
                 direction: -1,
             },
 
@@ -152,13 +121,6 @@ export const same_symbol_count_desc: AutomataDescription = {
                 next_state_id: 0,
                 write_symbol: "_",
                 direction: +1,
-            },
-            {
-                curr_state_id: 5,
-                read_symbol: "#",
-                next_state_id: 5,
-                write_symbol: "#",
-                direction: -1,
             },
             {
                 curr_state_id: 5,
